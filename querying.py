@@ -8,12 +8,11 @@ def get_vendors():
         with psycopg2.connect(**config) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT vendor_id, vendor_name FROM vendors ORDER BY vendor_name")
-                print("The number of parts: ", cur.rowcount)
-                row = cur.fetchone()
+                rows = cur.fetchall()
 
-                while row is not None:
+                print("The number of parts: ", cur.rowcount)
+                for row in rows:
                     print(row)
-                    row = cur.fetchone()
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
